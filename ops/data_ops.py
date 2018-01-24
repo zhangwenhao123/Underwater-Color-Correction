@@ -10,7 +10,7 @@ from __future__ import division
 from __future__ import absolute_import
 
 from scipy import misc
-from skimage import color
+# from skimage import color
 import collections
 import tensorflow as tf
 import numpy as np
@@ -20,7 +20,7 @@ import random
 import glob
 import os
 import fnmatch
-import cPickle as pickle
+import pickle as pickle
 
 Data = collections.namedtuple('trainData', 'ugray, uab, places2_L, places2_ab')
 
@@ -160,7 +160,7 @@ def getFeedDict(utrain_paths,places2_paths,BATCH_SIZE):
    places2train_batch = random.sample(places2_paths, BATCH_SIZE)
 
    img = tf.image.decode_image(utrain_batch[0])
-   print img
+   print (img)
 
 
    exit()
@@ -188,13 +188,13 @@ def loadData(batch_size, train=True):
 
    # load saved pickle files if already have them
    if os.path.isfile(pkl_utrain_file) and os.path.isfile(pkl_utest_file) and os.path.isfile(pkl_places2_file):
-      print 'Found pickle files'
+      print ('Found pickle files')
       utest_paths      = pickle.load(open(pkl_utest_file, 'rb'))
       if train:
          utrain_paths     = pickle.load(open(pkl_utrain_file, 'rb'))
          places2_paths = pickle.load(open(pkl_places2_file, 'rb'))
    else:
-      print 'Reading data...'
+      print ('Reading data...')
       utrain_dir  = '/mnt/data2/images/underwater/youtube/'
       #places2_dir  = '/mnt/data2/images/underwater/youtube/'
       #places2_dir    = '/mnt/data2/images/places2/test2014/'
@@ -236,9 +236,9 @@ def loadData(batch_size, train=True):
 
    if train:
       print
-      print len(utrain_paths), 'underwater train images'
-      print len(utest_paths), 'underwater test images'
-      print len(places2_paths), 'places2 images'
+      print (len(utrain_paths), 'underwater train images')
+      print (len(utest_paths), 'underwater test images')
+      print (len(places2_paths), 'places2 images')
       print
 
    if train: upaths = utrain_paths

@@ -108,7 +108,7 @@ def instance_norm(x, epsilon=1e-5):
 '''
 def upconv2d(x, filters, name=None, new_height=None, new_width=None, kernel_size=3):
 
-   print 'x:',x
+   print ('x:',x)
    shapes = x.get_shape().as_list()
    height = shapes[1]
    width  = shapes[2]

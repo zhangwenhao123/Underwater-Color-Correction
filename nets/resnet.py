@@ -8,13 +8,13 @@ from tf_ops import *
 def resBlock(x, num):
    
    conv1 = tcl.conv2d(x, 256, 3, 1, activation_fn=tf.nn.relu, normalizer_fn=tcl.batch_norm, weights_initializer=tf.random_normal_initializer(stddev=0.02), scope='g_resconv1_'+str(num))
-   print 'res_conv1:',conv1
+   # print 'res_conv1:',conv1
 
    conv2 = tcl.conv2d(conv1, 256, 3, 1, activation_fn=tf.identity, normalizer_fn=tcl.batch_norm, weights_initializer=tf.random_normal_initializer(stddev=0.02), scope='g_resconv2_'+str(num))
-   print 'res_conv2:',conv2
+   # print 'res_conv2:',conv2
    
    output = tf.add(x,conv2)
-   print 'res_out:',output
+   # print 'res_out:',output
    return output
 
 
@@ -22,14 +22,14 @@ def netG(x, LOSS_METHOD):
       
 
    conv1 = tcl.conv2d(x, 64, 7, 1, activation_fn=tf.nn.relu, normalizer_fn=tcl.batch_norm, weights_initializer=tf.random_normal_initializer(stddev=0.02), scope='g_conv1')
-   print 'conv1:',conv1
+   # print 'conv1:',conv1
 
    conv2 = tcl.conv2d(conv1, 128, 3, 2, activation_fn=tf.nn.relu, normalizer_fn=tcl.batch_norm, weights_initializer=tf.random_normal_initializer(stddev=0.02), scope='g_conv2')
-   print 'conv2:',conv2
+   # print 'conv2:',conv2
    
    conv3 = tcl.conv2d(conv2, 256, 3, 2, activation_fn=tf.nn.relu, normalizer_fn=tcl.batch_norm, weights_initializer=tf.random_normal_initializer(stddev=0.02), scope='g_conv3')
-   print 'conv3:',conv3
-   print
+   # print 'conv3:',conv3
+   # print
    
    res1 = resBlock(conv3, 1)
    res2 = resBlock(res1, 2)
@@ -63,26 +63,26 @@ def netG(x, LOSS_METHOD):
    res30 = resBlock(res29, 30)
 
    conv4 = tcl.conv2d_transpose(res30, 128, 3, 2, activation_fn=tf.nn.relu, normalizer_fn=tcl.batch_norm, weights_initializer=tf.random_normal_initializer(stddev=0.02), scope='g_conv4')
-   print 'conv4:',conv4
+   # print 'conv4:',conv4
    
    conv5 = tcl.conv2d_transpose(conv4, 64, 3, 2, activation_fn=tf.nn.relu, normalizer_fn=tcl.batch_norm, weights_initializer=tf.random_normal_initializer(stddev=0.02), scope='g_conv5')
-   print 'conv5:',conv5
+   # print 'conv5:',conv5
    
    conv6 = tcl.conv2d(conv5, 3, 7, 1, activation_fn=tf.nn.relu, normalizer_fn=tcl.batch_norm, weights_initializer=tf.random_normal_initializer(stddev=0.02), scope='g_conv6')
-   print 'conv6:',conv6
+   # print 'conv6:',conv6
 
    return conv6
 
 def netD(x, LOSS_METHOD, reuse=False):
-   print
-   print 'netD'
+   # print
+   # print 'netD'
    
    sc = tf.get_variable_scope()
    with tf.variable_scope(sc, reuse=reuse):
 
       conv1 = tcl.conv2d(x, 64, 4, 2, activation_fn=tf.identity, weights_initializer=tf.random_normal_initializer(stddev=0.02), scope='d_conv1')
       if LOSS_METHOD != 'wgan':
-         print 'Using batch norm in D'
+         # print 'Using batch norm in D'
          conv1 = tcl.batch_norm(conv1)
       conv1 = lrelu(conv1)
       
@@ -101,10 +101,10 @@ def netD(x, LOSS_METHOD, reuse=False):
       conv5 = tcl.conv2d(conv4, 1, 1, 1, activation_fn=tf.identity, weights_initializer=tf.random_normal_initializer(stddev=0.02), scope='d_conv5')
       if LOSS_METHOD != 'wgan': conv5 = tcl.batch_norm(conv5)
 
-      print conv1
-      print conv2
-      print conv3
-      print conv4
-      print conv5
+      # print conv1
+      # print conv2
+      # print conv3
+      # print conv4
+      # print conv5
       return conv5
 
